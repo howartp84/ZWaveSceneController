@@ -374,7 +374,7 @@ class Plugin(indigo.PluginBase):
 			indigo.zwave.sendRaw(device=indigoDev,cmdBytes=codeStr,sendMode=1)
 
 			self.debugLog(u"Setting button %s Parameters" % (i))	#Set level for Parameter (aka Button!) i to 0xFF ("On")
-			codeStr = [112, 3, i, 255]
+			codeStr = [112, 3, 1, i, 255]
 			indigo.zwave.sendRaw(device=indigoDev,cmdBytes=codeStr,sendMode=1)
 
 			self.debugLog(u"Setting button %s Scene No" % (i))	#Set Group (aka Button) i to activate Scene i, over 0 seconds. [Works for Enerwave]

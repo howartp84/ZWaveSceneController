@@ -37,7 +37,7 @@
 		<CallbackMethod>testSet3</CallbackMethod>
 	</MenuItem>
 -->
-	<!--<MenuItem id="configureDev">
+	<MenuItem id="configureDev">
 		<Name>Setup scene controller</Name>
 		<CallbackMethod>confController</CallbackMethod>
 		<ConfigUI>
@@ -53,7 +53,7 @@
 				</List>
 			</Field>
 		</ConfigUI>
-	</MenuItem>-->
+	</MenuItem>
 
 	<!--<MenuItem id="cmdVersion">
 		<Name>Get command version</Name>

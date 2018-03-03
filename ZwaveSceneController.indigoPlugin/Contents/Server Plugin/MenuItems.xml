@@ -55,7 +55,7 @@
 		</ConfigUI>
 	</MenuItem>
 
-	<!--<MenuItem id="cmdVersion">
+	<MenuItem id="cmdVersion">
 		<Name>Get command version</Name>
 		<CallbackMethod>cmdVersion</CallbackMethod>
 		<ConfigUI>
@@ -64,8 +64,10 @@
 				<List class="indigo.devices" filter="self"/>
 			</Field>
 		</ConfigUI>
-	</MenuItem>-->
+	</MenuItem>
 
+<!--
+Following was for testing blinds for someone - shouldn't be live anymore
 	<MenuItem id="callHomePress">
 		<Name>Call Home Position (Press)</Name>
 		<CallbackMethod>callHomePress</CallbackMethod>
@@ -90,7 +92,7 @@
 			</Field>
 		</ConfigUI>
 	</MenuItem>
-
+-->
 	<!--<MenuItem id="testHex">
 		<Name>Test Hex</Name>
 		<CallbackMethod>testHex</CallbackMethod>

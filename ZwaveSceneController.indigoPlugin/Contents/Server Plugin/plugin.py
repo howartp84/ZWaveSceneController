@@ -178,7 +178,7 @@ class Plugin(indigo.PluginBase):
 			actionMap = {1:0, 2:1, 3:7, 4:9, 5:8, 6:10, 7:2, 8:3, 9:4}
 			#ActionByte of 1 = Click, so actionMap[1] = actions[0], or {1:0, ...]
 			self.debugLog(u"-----")
-			self.debugLog(u"Version: %s" % self.Version)
+			self.debugLog(u"Version: %s" % self.version)
 			self.debugLog(u"Basic Scene Command received:")
 			self.debugLog(u"Raw command: %s" % (byteListStr))
 			#self.debugLog(u"Address: %s" % (bytes[5])) #zero-based
@@ -234,7 +234,7 @@ class Plugin(indigo.PluginBase):
 			actionMap = {0:0, 1:6, 2:5, 3:1, 4:2, 5:3, 6:4}
 			#ActionByte of 0 = Click, so actionMap[0] = actions[0], or {0:0, ...]
 			self.debugLog(u"-----")
-			self.debugLog(u"Version: %s" % self.Version)
+			self.debugLog(u"Version: %s" % self.version)
 			self.debugLog(u"Central Scene Command received:")
 			self.debugLog(u"Raw command: %s" % (byteListStr))
 			#self.debugLog(u"Address: %s" % (bytes[5])) #zero-based
@@ -311,7 +311,7 @@ class Plugin(indigo.PluginBase):
 			#ActionByte of 0 = Off,  so actionMap[0] = actions[12], or {0:12, ...]
 			#ActionByte of 255 = 1 = On, so actionMap[1] = actions[11], or {1:11, ...]  as we've mapped 1 to 255 further down
 			self.debugLog(u"-----")
-			self.debugLog(u"Version: %s" % self.Version)
+			self.debugLog(u"Version: %s" % self.version)
 			self.debugLog(u"On/Off Command received:")
 			self.debugLog(u"Raw command: %s" % (byteListStr))
 			#self.debugLog(u"Address: %s" % (bytes[5])) #zero-based
@@ -354,7 +354,7 @@ class Plugin(indigo.PluginBase):
 
 		if (bytes[7] == "2C") and (bytes[8] == "02"): #Scene Actuator Conf Get (probably from Enerwave)
 			self.debugLog(u"-----")
-			self.debugLog(u"Version: %s" % self.Version)
+			self.debugLog(u"Version: %s" % self.version)
 			self.debugLog(u"Actuator Config Get received:")
 			self.debugLog(u"Raw command: %s" % (byteListStr))
 			self.debugLog(u"Node:      %s" % (int(bytes[5],16)))
@@ -364,7 +364,7 @@ class Plugin(indigo.PluginBase):
 
 		if (bytes[7] == "2D") and (bytes[8] == "03"): #Scene Controller Config Report
 			self.debugLog(u"-----")
-			self.debugLog(u"Version: %s" % self.Version)
+			self.debugLog(u"Version: %s" % self.version)
 			self.debugLog(u"Controller Config Report received:")
 			self.debugLog(u"Raw command: %s" % (byteListStr))
 			self.debugLog(u"Node:      %s" % (int(bytes[5],16)))

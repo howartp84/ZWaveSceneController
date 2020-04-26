@@ -13,22 +13,6 @@
 				<Label>Remote Address:</Label>
 				<List class="indigo.devices" filter="indigo.zwave"/>
 			</Field>
-			<Field id="deviceAddress1" type="menu">
-				<Label>Remote Address:</Label>
-				<List class="indigo.devices" filter="indigo.zwave"/>
-			</Field>
-			<Field id="deviceAddress2" type="menu">
-				<Label>Remote Address:</Label>
-				<List class="indigo.devices" filter="indigo.zwave"/>
-			</Field>
-			<Field id="deviceAddress3" type="menu">
-				<Label>Remote Address:</Label>
-				<List class="indigo.devices" filter="indigo.zwave"/>
-			</Field>
-			<Field id="deviceAddress4" type="menu">
-				<Label>Remote Address:</Label>
-				<List class="indigo.devices" filter="indigo.zwave"/>
-			</Field>
 			<Field id="deviceButton" type="textfield">
 				<Label>Button ID:</Label>
 			</Field>

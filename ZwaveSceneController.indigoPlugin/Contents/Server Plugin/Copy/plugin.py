@@ -396,36 +396,13 @@ class Plugin(indigo.PluginBase):
 	def triggerEvent(self,eventType,deviceAddress,deviceButton,deviceAction):
 		#self.plugin.debugLog(u"triggerEvent called")
 		for trigger in self.events[eventType]:
-			
-			triggered = False #Default value
-						
-			for i in range(5): #i = 0-4
-				if triggered:
-					self.debugLog("Skipping %s as Triggered" % i)
-					continue #Skip remaining deviceAddresses in a given Trigger
-				dA = "deviceAddress" + str(i)
-				if str(dA) == "deviceAddress0":
-					dA = "deviceAddress"  #Handle backwards compatibility
-				#self.debugLog("dA List: %s" % dA)
-			
-				try:
-					dAddress = self.events[eventType][trigger].pluginProps[str(dA)]
-				except KeyError as k:
-					#self.debugLog("Please edit and save trigger %s" % indigo.triggers[trigger].name)
-					continue #Perfectly acceptable for backward compatibility
-				if dAddress <> "":
-					dDev = indigo.devices.get(int(dAddress),None)
-					#self.debugLog(str(dDev))
-					self.debugLog("dA: %s" % deviceAddress)
-					#self.debugLog("dA: %s" % dDev.ownerProps['address'])
-					if (fnmatch.fnmatch(str(int(deviceAddress,16)),str(dDev.ownerProps['address']))):
-						if (fnmatch.fnmatch(str(int(deviceButton)),self.events[eventType][trigger].pluginProps["deviceButton"])):
-							if (fnmatch.fnmatch(str(int(deviceAction)),self.events[eventType][trigger].pluginProps["deviceAction"])):
-								indigo.trigger.execute(trigger)
-								triggered = True
-								#return #don't execute twice if same device selected
-			triggered = False #Reset for next Trigger								
-
+			dAddress = self.events[eventType][trigger].pluginProps["deviceAddress"]
+			#self.debugLog(dAddress)
+			dDev = indigo.devices[int(dAddress)]
+			if (fnmatch.fnmatch(str(int(deviceAddress,16)),str(dDev.ownerProps['address']))):
+				if (fnmatch.fnmatch(str(int(deviceButton)),self.events[eventType][trigger].pluginProps["deviceButton"])):
+					if (fnmatch.fnmatch(str(int(deviceAction)),self.events[eventType][trigger].pluginProps["deviceAction"])):
+						indigo.trigger.execute(trigger)
 
 	#SCENE_ACTIVATION 			0x2B	43
 	#SCENE_ACTUATOR_CONF		0x2C	44

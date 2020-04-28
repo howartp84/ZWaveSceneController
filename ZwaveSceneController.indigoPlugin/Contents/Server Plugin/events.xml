@@ -4,29 +4,29 @@
 		<Name>Scene Command Received</Name>
 		<ConfigUI>
 			<Field id="label1" type="label">
-				<Label>The address of your device, as well as button ID and actions, can be found by enabling debug mode for this plugin.</Label>
+				<Label>You can select one or more devices for this trigger to respond to. The button ID and actions can be found by enabling debug mode for this plugin.</Label>
 			</Field>
 			<Field id="label2" type="label">
 				<Label>Some devices, such as Remotec ZRC-90 Scene Master, use logical buttons and actions. Others, such as the BeNext Scene Controller, report buttons 1-8 when you single-click and buttons 9-16 when double-click the same buttons.</Label>
 			</Field>
 			<Field id="deviceAddress" type="menu">
-				<Label>Remote Address:</Label>
+				<Label>Device 1:</Label>
 				<List class="indigo.devices" filter="indigo.zwave"/>
 			</Field>
 			<Field id="deviceAddress1" type="menu">
-				<Label>Remote Address:</Label>
+				<Label>Device 2:</Label>
 				<List class="indigo.devices" filter="indigo.zwave"/>
 			</Field>
 			<Field id="deviceAddress2" type="menu">
-				<Label>Remote Address:</Label>
+				<Label>Device 3:</Label>
 				<List class="indigo.devices" filter="indigo.zwave"/>
 			</Field>
 			<Field id="deviceAddress3" type="menu">
-				<Label>Remote Address:</Label>
+				<Label>Device 4:</Label>
 				<List class="indigo.devices" filter="indigo.zwave"/>
 			</Field>
 			<Field id="deviceAddress4" type="menu">
-				<Label>Remote Address:</Label>
+				<Label>Device 5:</Label>
 				<List class="indigo.devices" filter="indigo.zwave"/>
 			</Field>
 			<Field id="deviceButton" type="textfield">

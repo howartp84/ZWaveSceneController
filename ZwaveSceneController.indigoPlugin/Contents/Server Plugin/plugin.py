@@ -142,7 +142,7 @@ class Plugin(indigo.PluginBase):
 
 		if (int(bytes[5],16) == 61):			#Add node IDs here for debugging
 			self.debugLog(u"Raw RFWC5 61 command: %s" % (byteListStr))
-			
+
 
 
 		#######
@@ -280,7 +280,7 @@ class Plugin(indigo.PluginBase):
 			self.debugLog(u"Action:    %s" % (actions[actionRaw]))
 			action = str(actionMap[int(actionRaw)])
 			button = str(1)
-			
+
 			if (int(bytes[5],16)) in self.controllerIDs: #Has dummy device
 				devID = self.devFromNode[int(bytes[5],16)]
 				dev = indigo.devices[int(devID)]
@@ -396,35 +396,42 @@ class Plugin(indigo.PluginBase):
 	def triggerEvent(self,eventType,deviceAddress,deviceButton,deviceAction):
 		#self.plugin.debugLog(u"triggerEvent called")
 		for trigger in self.events[eventType]:
-			
+
 			triggered = False #Default value
-						
+
 			for i in range(5): #i = 0-4
+				self.debugLog("403 i: %s" % i)
 				if triggered:
 					self.debugLog("Skipping %s as Triggered" % i)
 					continue #Skip remaining deviceAddresses in a given Trigger
 				dA = "deviceAddress" + str(i)
 				if str(dA) == "deviceAddress0":
 					dA = "deviceAddress"  #Handle backwards compatibility
-				#self.debugLog("dA List: %s" % dA)
-			
+				self.debugLog("410 dA List: %s" % dA)
+
 				try:
 					dAddress = self.events[eventType][trigger].pluginProps[str(dA)]
+					self.debugLog("414 dAddress: %s" % dAddress)
 				except KeyError as k:
 					#self.debugLog("Please edit and save trigger %s" % indigo.triggers[trigger].name)
+					self.debugLog("416 KeyError (not a problem): %s" % k)
 					continue #Perfectly acceptable for backward compatibility
 				if dAddress <> "":
 					dDev = indigo.devices.get(int(dAddress),None)
-					#self.debugLog(str(dDev))
-					self.debugLog("dA: %s" % deviceAddress)
-					#self.debugLog("dA: %s" % dDev.ownerProps['address'])
+					self.debugLog("421 dDev: %s" % str(dDev))
+					#self.debugLog("dA: %s" % deviceAddress)
+					#self.debugLog("dD: %s" % dDev.ownerProps['address'])
 					if (fnmatch.fnmatch(str(int(deviceAddress,16)),str(dDev.ownerProps['address']))):
+						self.debugLog("425 if()")
 						if (fnmatch.fnmatch(str(int(deviceButton)),self.events[eventType][trigger].pluginProps["deviceButton"])):
+							self.debugLog("427 if()")
 							if (fnmatch.fnmatch(str(int(deviceAction)),self.events[eventType][trigger].pluginProps["deviceAction"])):
+								self.debugLog("429 Executing trigger")
 								indigo.trigger.execute(trigger)
 								triggered = True
 								#return #don't execute twice if same device selected
-			triggered = False #Reset for next Trigger								
+				self.debugLog("403 End of i: %s" % i)
+			triggered = False #Reset for next Trigger
 
 
 	#SCENE_ACTIVATION 			0x2B	43

@@ -400,37 +400,37 @@ class Plugin(indigo.PluginBase):
 			triggered = False #Default value
 
 			for i in range(5): #i = 0-4
-				self.debugLog("403 i: %s" % i)
+				self.debugLog(u"403 i: %s" % i)
 				if triggered:
-					self.debugLog("Skipping %s as Triggered" % i)
+					self.debugLog(u"Skipping %s as Triggered" % i)
 					continue #Skip remaining deviceAddresses in a given Trigger
 				dA = "deviceAddress" + str(i)
 				if str(dA) == "deviceAddress0":
 					dA = "deviceAddress"  #Handle backwards compatibility
-				self.debugLog("410 dA List: %s" % dA)
+				self.debugLog(u"410 dA List: %s" % dA)
 
 				try:
 					dAddress = self.events[eventType][trigger].pluginProps[str(dA)]
-					self.debugLog("414 dAddress: %s" % dAddress)
+					self.debugLog(u"414 dAddress: %s" % dAddress)
 				except KeyError as k:
 					#self.debugLog("Please edit and save trigger %s" % indigo.triggers[trigger].name)
-					self.debugLog("416 KeyError (not a problem): %s" % k)
+					self.debugLog(u"416 KeyError (not a problem): %s" % k)
 					continue #Perfectly acceptable for backward compatibility
 				if dAddress <> "":
 					dDev = indigo.devices.get(int(dAddress),None)
-					self.debugLog("421 dDev: %s" % str(dDev))
-					#self.debugLog("dA: %s" % deviceAddress)
-					#self.debugLog("dD: %s" % dDev.ownerProps['address'])
+					self.debugLog(u"421 dDev: %s" % str(dDev))
+					#self.debugLog(u"dA: %s" % deviceAddress)
+					#self.debugLog(u"dD: %s" % dDev.ownerProps['address'])
 					if (fnmatch.fnmatch(str(int(deviceAddress,16)),str(dDev.ownerProps['address']))):
-						self.debugLog("425 if()")
+						self.debugLog(u"425 if()")
 						if (fnmatch.fnmatch(str(int(deviceButton)),self.events[eventType][trigger].pluginProps["deviceButton"])):
-							self.debugLog("427 if()")
+							self.debugLog(u"427 if()")
 							if (fnmatch.fnmatch(str(int(deviceAction)),self.events[eventType][trigger].pluginProps["deviceAction"])):
-								self.debugLog("429 Executing trigger")
+								self.debugLog(u"429 Executing trigger")
 								indigo.trigger.execute(trigger)
 								triggered = True
 								#return #don't execute twice if same device selected
-				self.debugLog("403 End of i: %s" % i)
+				self.debugLog(u"403 End of i: %s" % i)
 			triggered = False #Reset for next Trigger
 
 

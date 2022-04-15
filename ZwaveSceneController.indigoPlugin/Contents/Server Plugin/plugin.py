@@ -54,6 +54,7 @@ class Plugin(indigo.PluginBase):
 	########################################
 	def startup(self):
 		self.debugLog(u"startup called -- subscribing to all incoming Z-Wave commands")
+		self.debugLog("Plugin version: {}".format(self.version))
 		indigo.zwave.subscribeToIncoming()
 
 	def shutdown(self):
@@ -67,7 +68,7 @@ class Plugin(indigo.PluginBase):
 			self.debug = valuesDict.get("showDebugInfo", False)
 			#self.sceneDevID = valuesDict.get("sceneDevID", 200)
 			#self.sceneDevNode = indigo.devices[int(self.sceneDevID)].ownerProps['address']
-			#indigo.server.log("Scene Device: %s" % indigo.devices[int(self.sceneDevID)].name)
+			#indigo.server.log("Scene Device: {}".format(indigo.devices[int(self.sceneDevID)].name))
 			if self.debug:
 				indigo.server.log("Debug logging enabled")
 			else:
@@ -120,28 +121,28 @@ class Plugin(indigo.PluginBase):
 		bytes = byteListStr.split()
 
 		if (int(bytes[5],16) == 82):			#Add node IDs here for debugging
-			self.debugLog(u"Raw Node 82 command: %s" % (byteListStr))
+			self.debugLog(u"Raw Node 82 command: {}".format(byteListStr))
 
 		if (int(bytes[5],16) == 85):			#Add node IDs here for debugging
-			self.debugLog(u"Raw Node 85 command: %s" % (byteListStr))
+			self.debugLog(u"Raw Node 85 command: {}".format(byteListStr))
 
 		if (int(bytes[5],16)) not in self.controllerIDs:
-			#self.debugLog(u"Node %s is not a scene controller - ignoring" % (int(bytes[5],16)))
+			#self.debugLog(u"Node {} is not a scene controller - ignoring".format(int(bytes[5],16)))
 			return
 		else:
-			self.debugLog(u"Node ID %s found in controllerIDs" % (int(bytes[5],16)))
+			self.debugLog(u"Node ID {} found in controllerIDs".format(int(bytes[5],16)))
 
 		if (int(bytes[5],16) == 34):			#Add node IDs here for debugging
-			self.debugLog(u"Raw RFWC5 34 command: %s" % (byteListStr))
+			self.debugLog(u"Raw RFWC5 34 command: {}".format(byteListStr))
 
 		if (int(bytes[5],16) == 35):			#Add node IDs here for debugging
-			self.debugLog(u"Raw RFWC5 35 command: %s" % (byteListStr))
+			self.debugLog(u"Raw RFWC5 35 command: {}".format(byteListStr))
 
 		if (int(bytes[5],16) == 44):			#Add node IDs here for debugging
-			self.debugLog(u"Raw RFWC5 44 command: %s" % (byteListStr))
+			self.debugLog(u"Raw RFWC5 44 command: {}".format(byteListStr))
 
 		if (int(bytes[5],16) == 61):			#Add node IDs here for debugging
-			self.debugLog(u"Raw RFWC5 61 command: %s" % (byteListStr))
+			self.debugLog(u"Raw RFWC5 61 command: {}".format(byteListStr))
 
 
 
@@ -178,26 +179,26 @@ class Plugin(indigo.PluginBase):
 			actionMap = {1:0, 2:1, 3:7, 4:9, 5:8, 6:10, 7:2, 8:3, 9:4}
 			#ActionByte of 1 = Click, so actionMap[1] = actions[0], or {1:0, ...]
 			self.debugLog(u"-----")
-			self.debugLog(u"Version: %s" % self.version)
+			self.debugLog(u"Version: {}".format(self.version))
 			self.debugLog(u"Basic Scene Command received:")
-			self.debugLog(u"Raw command: %s" % (byteListStr))
-			#self.debugLog(u"Address: %s" % (bytes[5])) #zero-based
-			self.debugLog(u"Node:      %s" % (int(bytes[5],16)))
-			self.debugLog(u"NodeID:      %s" % (nodeId))
+			self.debugLog(u"Raw command: {}".format(byteListStr))
+			#self.debugLog(u"Address: {}".format(bytes[5])) #zero-based
+			self.debugLog(u"Node:      {}".format(int(bytes[5],16)))
+			self.debugLog(u"NodeID:      {}".format(nodeId))
 
 			actionRaw = int(bytes[9],16)
-			self.debugLog(u"ActionRaw: %s" % (actionRaw))
+			self.debugLog(u"ActionRaw: {}".format(actionRaw))
 			if (actionRaw < 10):
-				self.debugLog(u"Button:    %s" % (str(int(bytes[9],16))))
+				self.debugLog(u"Button:    {}".format(str(int(bytes[9],16))))
 				self.debugLog(u"ActionID:  1")
-				self.debugLog(u"Action:    %s" % (actions[1]))
+				self.debugLog(u"Action:    {}".format(actions[1]))
 				actionIn = "1"
 				action = str(actionMap[int(actionIn)])
 				button = str(int(bytes[9],16))
 			else:
-				self.debugLog(u"Button:    %s" % (str(int(bytes[9],16))[0:1]))
-				self.debugLog(u"ActionID:  %s" % (str(int(bytes[9],16))[1:2]))
-				self.debugLog(u"Action:    %s" % (actions[int(str(int(bytes[9],16))[1:2])]))
+				self.debugLog(u"Button:    {}".format(str(int(bytes[9],16))[0:1]))
+				self.debugLog(u"ActionID:  {}".format(str(int(bytes[9],16))[1:2]))
+				self.debugLog(u"Action:    {}".format(actions[int(str(int(bytes[9],16))[1:2])]))
 				actionIn = str(int(bytes[9],16))[1:2]
 				action = str(actionMap[int(actionIn)])
 				button = str(int(bytes[9],16))[0:1]
@@ -225,35 +226,35 @@ class Plugin(indigo.PluginBase):
 
 		if (bytes[6] == "05") and (bytes[7] == "5B"): #Central Scene
 			if (int(bytes[10],16) > 127):
-				self.debugLog(u"B10: %s" % (int(bytes[10],16)))
+				self.debugLog(u"B10: {}".format(int(bytes[10],16)))
 				x = (int(bytes[10],16)-128)
-				self.debugLog(u"X10: %s" % (x))
+				self.debugLog(u"X10: {}".format(x))
 				bytes[10] = hex(x)[2:]
-				self.debugLog(u"B10: %s" % (int(bytes[10],16)))
+				self.debugLog(u"B10: {}".format(int(bytes[10],16)))
 			actions = ["Click","Release","Hold", "Double-Click", "Triple-Click", "Quad-Click", "Quint-Click"]
 			actionMap = {0:0, 1:6, 2:5, 3:1, 4:2, 5:3, 6:4}
 			#ActionByte of 0 = Click, so actionMap[0] = actions[0], or {0:0, ...]
 			self.debugLog(u"-----")
-			self.debugLog(u"Version: %s" % self.version)
+			self.debugLog(u"Version: {}".format(self.version))
 			self.debugLog(u"Central Scene Command received:")
-			self.debugLog(u"Raw command: %s" % (byteListStr))
-			#self.debugLog(u"Address: %s" % (bytes[5])) #zero-based
-			#self.debugLog(u"0x03:    %s" % (int(bytes[8],16))) #This is 0x03 Report (ie not Get/Set)
-			self.debugLog(u"Node:    %s" % (int(bytes[5],16)))
-			self.debugLog(u"Button:  %s" % (int(bytes[11],16)))
-			self.debugLog(u"ActionID:  %s" % (int(bytes[10])))
-			self.debugLog(u"Action:  %s" % (actions[int(bytes[10])]))
-			#self.debugLog(u"FireID:  %s" % (int(bytes[9],16)))
+			self.debugLog(u"Raw command: {}".format(byteListStr))
+			#self.debugLog(u"Address: {}".format(bytes[5])) #zero-based
+			#self.debugLog(u"0x03:    {}".format(int(bytes[8],16))) #This is 0x03 Report (ie not Get/Set)
+			self.debugLog(u"Node:    {}".format(int(bytes[5],16)))
+			self.debugLog(u"Button:  {}".format(int(bytes[11],16)))
+			self.debugLog(u"ActionID:  {}".format(int(bytes[10])))
+			self.debugLog(u"Action:  {}".format(actions[int(bytes[10])]))
+			#self.debugLog(u"FireID:  {}".format(int(bytes[9],16)))
 			self.debugLog(u"-----")
 
 			action = str(actionMap[int(bytes[10])])
 			button = str(int(bytes[11],16))
-			#if (self.fireHash <> None):
-				#self.debugLog(u"Hash <> none")
-			#if (self.fireHash <> (str(int(bytes[9],16))[0:1] + str(int(bytes[9],16)))):
-				#self.debugLog(u"Hash <> strint")
-			if (self.fireHash <> None) and (self.fireHash <> (str(int(bytes[9],16))[0:1] + str(int(bytes[9],16)))):
-				#self.debugLog(u"Triggering button %s, action %s" % (button,action))
+			#if (self.fireHash != None):
+				#self.debugLog(u"Hash != none")
+			#if (self.fireHash != (str(int(bytes[9],16))[0:1] + str(int(bytes[9],16)))):
+				#self.debugLog(u"Hash != strint")
+			if (self.fireHash != None) and (self.fireHash != (str(int(bytes[9],16))[0:1] + str(int(bytes[9],16)))):
+				#self.debugLog(u"Triggering button {}, action {}".format(button,action))
 				self.triggerEvent("cmdReceived",bytes[5],button,action)
 				self.updateDevScene(int(bytes[5],16),button,action)
 			self.fireHash = str(int(bytes[9],16))[0:1] + str(int(bytes[9],16))
@@ -266,18 +267,18 @@ class Plugin(indigo.PluginBase):
 			#ActionByte of 255 = 1 = On, so actionMap[1] = actions[11], or {1:11, ...]  as we've mapped 1 to 255 further down
 			self.debugLog(u"-----")
 			self.debugLog(u"On/Off Command received:")
-			self.debugLog(u"Raw command: %s" % (byteListStr))
-			#self.debugLog(u"Address: %s" % (bytes[5])) #zero-based
-			self.debugLog(u"Node:      %s" % (int(bytes[5],16)))
-			self.debugLog(u"NodeID:    %s" % (nodeId))
+			self.debugLog(u"Raw command: {}".format(byteListStr))
+			#self.debugLog(u"Address: {}".format(bytes[5])) #zero-based
+			self.debugLog(u"Node:      {}".format(int(bytes[5],16)))
+			self.debugLog(u"NodeID:    {}".format(nodeId))
 
 			actionRaw = int(bytes[9],16)
 			if (actionRaw == 255):
 				actionRaw = 1
-			self.debugLog(u"ActionRaw: %s" % (actionRaw))
+			self.debugLog(u"ActionRaw: {}".format(actionRaw))
 			self.debugLog(u"Button:    1")
-			self.debugLog(u"ActionID:  %s" % (actionMap[actionRaw]))
-			self.debugLog(u"Action:    %s" % (actions[actionRaw]))
+			self.debugLog(u"ActionID:  {}".format(actionMap[actionRaw]))
+			self.debugLog(u"Action:    {}".format(actions[actionRaw]))
 			action = str(actionMap[int(actionRaw)])
 			button = str(1)
 
@@ -311,20 +312,20 @@ class Plugin(indigo.PluginBase):
 			#ActionByte of 0 = Off,  so actionMap[0] = actions[12], or {0:12, ...]
 			#ActionByte of 255 = 1 = On, so actionMap[1] = actions[11], or {1:11, ...]  as we've mapped 1 to 255 further down
 			self.debugLog(u"-----")
-			self.debugLog(u"Version: %s" % self.version)
+			self.debugLog(u"Version: {}".format(self.version))
 			self.debugLog(u"On/Off Command received:")
-			self.debugLog(u"Raw command: %s" % (byteListStr))
-			#self.debugLog(u"Address: %s" % (bytes[5])) #zero-based
-			self.debugLog(u"Node:      %s" % (int(bytes[5],16)))
-			self.debugLog(u"NodeID:    %s" % (nodeId))
+			self.debugLog(u"Raw command: {}".format(byteListStr))
+			#self.debugLog(u"Address: {}".format(bytes[5])) #zero-based
+			self.debugLog(u"Node:      {}".format(int(bytes[5],16)))
+			self.debugLog(u"NodeID:    {}".format(nodeId))
 
 			actionRaw = int(bytes[9],16)
 			if (actionRaw == 255):
 				actionRaw = 1
-			self.debugLog(u"ActionRaw: %s" % (actionRaw))
+			self.debugLog(u"ActionRaw: {}".format(actionRaw))
 			self.debugLog(u"Button:    1")
-			self.debugLog(u"ActionID:  %s" % (actionMap[actionRaw]))
-			self.debugLog(u"Action:    %s" % (actions[actionRaw]))
+			self.debugLog(u"ActionID:  {}".format(actionMap[actionRaw]))
+			self.debugLog(u"Action:    {}".format(actions[actionRaw]))
 			action = str(actionMap[int(actionRaw)])
 			button = str(1)
 
@@ -354,22 +355,22 @@ class Plugin(indigo.PluginBase):
 
 		if (bytes[7] == "2C") and (bytes[8] == "02"): #Scene Actuator Conf Get (probably from Enerwave)
 			self.debugLog(u"-----")
-			self.debugLog(u"Version: %s" % self.version)
+			self.debugLog(u"Version: {}".format(self.version))
 			self.debugLog(u"Actuator Config Get received:")
-			self.debugLog(u"Raw command: %s" % (byteListStr))
-			self.debugLog(u"Node:      %s" % (int(bytes[5],16)))
-			self.debugLog(u"Scene:      %s" % (int(bytes[9],16)))
+			self.debugLog(u"Raw command: {}".format(byteListStr))
+			self.debugLog(u"Node:      {}".format(int(bytes[5],16)))
+			self.debugLog(u"Scene:      {}".format(int(bytes[9],16)))
 
 			self.updateDevScene(int(bytes[5],16),int(bytes[9],16),"")
 
 		if (bytes[7] == "2D") and (bytes[8] == "03"): #Scene Controller Config Report
 			self.debugLog(u"-----")
-			self.debugLog(u"Version: %s" % self.version)
+			self.debugLog(u"Version: {}".format(self.version))
 			self.debugLog(u"Controller Config Report received:")
-			self.debugLog(u"Raw command: %s" % (byteListStr))
-			self.debugLog(u"Node:      %s" % (int(bytes[5],16)))
-			self.debugLog(u"Group:      %s" % (int(bytes[9],16)))
-			self.debugLog(u"Scene:      %s" % (int(bytes[10],16)))
+			self.debugLog(u"Raw command: {}".format(byteListStr))
+			self.debugLog(u"Node:      {}".format(int(bytes[5],16)))
+			self.debugLog(u"Group:      {}".format(int(bytes[9],16)))
+			self.debugLog(u"Scene:      {}".format(int(bytes[10],16)))
 
 			self.updateDevScene(int(bytes[5],16),int(bytes[10],16),"")
 
@@ -400,27 +401,27 @@ class Plugin(indigo.PluginBase):
 			triggered = False #Default value
 
 			for i in range(5): #i = 0-4
-				self.debugLog(u"403 i: %s" % i)
+				self.debugLog(u"403 i: {}".format(i))
 				if triggered:
-					self.debugLog(u"Skipping %s as Triggered" % i)
+					self.debugLog(u"Skipping {} as Triggered".format(i))
 					continue #Skip remaining deviceAddresses in a given Trigger
 				dA = "deviceAddress" + str(i)
 				if str(dA) == "deviceAddress0":
 					dA = "deviceAddress"  #Handle backwards compatibility
-				self.debugLog(u"410 dA List: %s" % dA)
+				self.debugLog(u"410 dA List: {}".format(dA))
 
 				try:
 					dAddress = self.events[eventType][trigger].pluginProps[str(dA)]
-					self.debugLog(u"414 dAddress: %s" % dAddress)
+					self.debugLog(u"414 dAddress: {}".format(dAddress))
 				except KeyError as k:
-					#self.debugLog("Please edit and save trigger %s" % indigo.triggers[trigger].name)
-					self.debugLog(u"416 KeyError (not a problem): %s" % k)
+					#self.debugLog("Please edit and save trigger {}".format(indigo.triggers[trigger].name))
+					self.debugLog(u"416 KeyError (not a problem): {}".format(k))
 					continue #Perfectly acceptable for backward compatibility
-				if dAddress <> "":
+				if dAddress != "":
 					dDev = indigo.devices.get(int(dAddress),None)
-					self.debugLog(u"421 dDev: %s" % str(dDev))
-					#self.debugLog(u"dA: %s" % deviceAddress)
-					#self.debugLog(u"dD: %s" % dDev.ownerProps['address'])
+					self.debugLog(u"421 dDev: {}".format(str(dDev)))
+					#self.debugLog(u"dA: {}".format(deviceAddress))
+					#self.debugLog(u"dD: {}".format(dDev.ownerProps['address']))
 					if (fnmatch.fnmatch(str(int(deviceAddress,16)),str(dDev.ownerProps['address']))):
 						self.debugLog(u"425 if()")
 						if (fnmatch.fnmatch(str(int(deviceButton)),self.events[eventType][trigger].pluginProps["deviceButton"])):
@@ -430,7 +431,7 @@ class Plugin(indigo.PluginBase):
 								indigo.trigger.execute(trigger)
 								triggered = True
 								#return #don't execute twice if same device selected
-				self.debugLog(u"403 End of i: %s" % i)
+				self.debugLog(u"403 End of i: {}".format(i))
 			triggered = False #Reset for next Trigger
 
 
@@ -545,28 +546,28 @@ class Plugin(indigo.PluginBase):
 			buttonCount = 7
 
 		for i in range(1,buttonCount+1):
-			self.debugLog(u"Removing button %s Associations" % (i))	#Remove associations for Group (aka Button)
+			self.debugLog(u"Removing button {} Associations".format(i))	#Remove associations for Group (aka Button)
 			codeStr = [133, 4, i]
 			indigo.zwave.sendRaw(device=indigoDev,cmdBytes=codeStr,sendMode=1)
 
 			self.debugLog(u"Sleeping 5 seconds")
 			self.sleep(5)
 
-			self.debugLog(u"Setting button %s Associations" % (i))	#Associate Group (aka Button) i to node 1 (controller)
+			self.debugLog(u"Setting button {} Associations".format(i))	#Associate Group (aka Button) i to node 1 (controller)
 			codeStr = [133, 1, i, 1]
 			indigo.zwave.sendRaw(device=indigoDev,cmdBytes=codeStr,sendMode=1)
 
 			self.debugLog(u"Sleeping 5 seconds")
 			self.sleep(5)
 
-			self.debugLog(u"Setting button %s Parameters" % (i))	#Set level for Parameter (aka Button!) i to 0xFF ("On")
+			self.debugLog(u"Setting button {} Parameters".format(i))	#Set level for Parameter (aka Button!) i to 0xFF ("On")
 			codeStr = [112, 3, 1, i, 255]
 			indigo.zwave.sendRaw(device=indigoDev,cmdBytes=codeStr,sendMode=1)
 
 			self.debugLog(u"Sleeping 5 seconds")
 			self.sleep(5)
 
-			self.debugLog(u"Setting button %s Scene No" % (i))	#Set Group (aka Button) i to activate Scene i, over 0 seconds. [Works for Enerwave]
+			self.debugLog(u"Setting button {} Scene No".format(i))	#Set Group (aka Button) i to activate Scene i, over 0 seconds. [Works for Enerwave]
 			codeStr = [45, 1, i, i, 0]
 			#codeStr = [2D, 1, i, i, 0]
 			indigo.zwave.sendRaw(device=indigoDev,cmdBytes=codeStr,sendMode=1)
@@ -613,8 +614,8 @@ class Plugin(indigo.PluginBase):
 		for dev in indigo.devices.iter("self"):
 			dNode = indigo.devices[int(dev.ownerProps['deviceId'])].ownerProps['address']
 			if (int(dNode) == int(inNode)):
-				self.debugLog(u"Updating device %s with button %s" % (dev.name,inButton))
-				dev.updateStateOnServer("currentScene", "Scene %s" % (inButton))
+				self.debugLog(u"Updating device {} with button {}".format(dev.name,inButton))
+				dev.updateStateOnServer("currentScene", "Scene {}".format(inButton))
 
 	def getScene(self,pluginAction):
 		self.debugLog("getScene called")
@@ -678,7 +679,7 @@ class Plugin(indigo.PluginBase):
 
 		self.debugLog("Blind selected: " + str(indigoDev.name))
 
-		self.debugLog(u"Setting blind to position %s ... hopefully... " % (position))
+		self.debugLog(u"Setting blind to position {} ... hopefully... ".format(position))
 		codeStr = [38, 1, int(position), 255] #Position, instant
 		indigo.zwave.sendRaw(device=indigoDev,cmdBytes=codeStr,sendMode=1)
 

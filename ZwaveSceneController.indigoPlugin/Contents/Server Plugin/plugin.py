@@ -377,7 +377,7 @@ class Plugin(indigo.PluginBase):
 
 
 	def triggerStartProcessing(self, trigger):
-		self.debugLog(u"Start processing trigger " + unicode(trigger.name))
+		self.debugLog(u"Start processing trigger {}".format(trigger.name))
 		self.events[trigger.pluginTypeId][trigger.id] = trigger
 		#self.debugLog(str(self.events["cmdReceived"][trigger.id].pluginProps["deviceAddress"]))
 		#self.debugLog(str(self.events["cmdReceived"][trigger.id].pluginProps["deviceAddress"]))
@@ -389,7 +389,7 @@ class Plugin(indigo.PluginBase):
 		#self.debugLog(dev.ownerProps['address'])
 
 	def triggerStopProcessing(self, trigger):
-		self.debugLog(u"Stop processing trigger " + unicode(trigger.name))
+		self.debugLog(u"Stop processing trigger {}".format(trigger.name))
 		if trigger.pluginTypeId in self.events:
 			if trigger.id in self.events[trigger.pluginTypeId]:
 				del self.events[trigger.pluginTypeId][trigger.id]
